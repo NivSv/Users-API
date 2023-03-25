@@ -2,10 +2,12 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { patchNestJsSwagger } from 'nestjs-zod';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  //swagger
+  patchNestJsSwagger();
   const config = new DocumentBuilder()
     .setTitle('Users API')
     .setDescription('The users API description')

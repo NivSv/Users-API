@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { HealthController } from './health/health.controller';
+import { UsersModule } from './users/users.module';
 import configuration from './config/configuration';
+import { ZodValidationPipe } from 'nestjs-zod';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -9,8 +12,14 @@ import configuration from './config/configuration';
       isGlobal: true,
       load: [configuration],
     }),
+    UsersModule,
   ],
   controllers: [HealthController],
-  providers: [],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
+    },
+  ],
 })
 export class AppModule {}
