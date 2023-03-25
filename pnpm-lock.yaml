@@ -1,80 +1,104 @@
 lockfileVersion: 5.4
 
-specifiers:
-  '@nestjs/cli': ^9.3.0
-  '@nestjs/common': ^9.3.12
-  '@nestjs/config': ^2.3.1
-  '@nestjs/core': ^9.3.12
-  '@nestjs/platform-express': ^9.3.12
-  '@nestjs/schematics': ^9.0.4
-  '@nestjs/swagger': ^6.2.1
-  '@nestjs/testing': ^9.3.12
-  '@prisma/client': ^4.11.0
-  '@types/express': ^4.17.17
-  '@types/jest': 28.1.8
-  '@types/node': ^16.18.20
-  '@types/supertest': ^2.0.12
-  '@typescript-eslint/eslint-plugin': ^5.56.0
-  '@typescript-eslint/parser': ^5.56.0
-  eslint: ^8.36.0
-  eslint-config-prettier: ^8.8.0
-  eslint-plugin-prettier: ^4.2.1
-  husky: ^8.0.0
-  jest: 28.1.3
-  nestjs-zod: ^1.2.3
-  prettier: ^2.8.7
-  prisma: ^4.11.0
-  reflect-metadata: ^0.1.13
-  rimraf: ^3.0.2
-  rxjs: ^7.8.0
-  source-map-support: ^0.5.21
-  supertest: ^6.3.3
-  ts-jest: 28.0.8
-  ts-loader: ^9.4.2
-  ts-node: ^10.9.1
-  tsconfig-paths: 4.1.0
-  typescript: ^4.9.5
-  webpack: ^5.76.3
-  zod: ^3.21.4
+importers:
 
-dependencies:
-  '@nestjs/common': 9.3.12_mnr6j2del53muneqly5h4y27ai
-  '@nestjs/config': 2.3.1_jy37pi22pqa22ux5geb72eebiu
-  '@nestjs/core': 9.3.12_qhubmme3ystyvorrsy6sfc2ome
-  '@nestjs/platform-express': 9.3.12_ge4qplnzbmfyi5znl534zhtkn4
-  '@nestjs/swagger': 6.2.1_bgmtsjzu2jyijhogwtog4e3a6e
-  '@prisma/client': 4.11.0_prisma@4.11.0
-  nestjs-zod: 1.2.3_kwb2a4f7bk4iyyo5b2u32jtvxm
-  prisma: 4.11.0
-  reflect-metadata: 0.1.13
-  rimraf: 3.0.2
-  rxjs: 7.8.0
-  zod: 3.21.4
+  .:
+    specifiers:
+      '@typescript-eslint/eslint-plugin': ^5.56.0
+      '@typescript-eslint/parser': ^5.56.0
+      eslint: ^8.36.0
+      eslint-config-prettier: ^8.8.0
+      eslint-plugin-prettier: ^4.2.1
+      husky: ^8.0.0
+      prettier: ^2.8.7
+    devDependencies:
+      '@typescript-eslint/eslint-plugin': 5.56.0_iskin7c6dxqunwflhstekcjqmq
+      '@typescript-eslint/parser': 5.56.0_vgl77cfdswitgr47lm5swmv43m
+      eslint: 8.36.0
+      eslint-config-prettier: 8.8.0_eslint@8.36.0
+      eslint-plugin-prettier: 4.2.1_ywlv3zveqg2kxfq44lflihh5mm
+      husky: 8.0.3
+      prettier: 2.8.7
 
-devDependencies:
-  '@nestjs/cli': 9.3.0
-  '@nestjs/schematics': 9.0.4_typescript@4.9.5
-  '@nestjs/testing': 9.3.12_ckvy3xuqd5ydy3ipiq7jufha44
-  '@types/express': 4.17.17
-  '@types/jest': 28.1.8
-  '@types/node': 16.18.20
-  '@types/supertest': 2.0.12
-  '@typescript-eslint/eslint-plugin': 5.56.0_iskin7c6dxqunwflhstekcjqmq
-  '@typescript-eslint/parser': 5.56.0_vgl77cfdswitgr47lm5swmv43m
-  eslint: 8.36.0
-  eslint-config-prettier: 8.8.0_eslint@8.36.0
-  eslint-plugin-prettier: 4.2.1_ywlv3zveqg2kxfq44lflihh5mm
-  husky: 8.0.3
-  jest: 28.1.3_sdvwijez77tgluqfi7lxjhoja4
-  prettier: 2.8.7
-  source-map-support: 0.5.21
-  supertest: 6.3.3
-  ts-jest: 28.0.8_mgg23zyyvjoe75wbzvxzqqpmne
-  ts-loader: 9.4.2_t37drsge5fnqkss6ynqsf64hyi
-  ts-node: 10.9.1_zoixeg4epk3dp6zjuh3wmneici
-  tsconfig-paths: 4.1.0
-  typescript: 4.9.5
-  webpack: 5.76.3
+  apps/user-service:
+    specifiers:
+      '@nestjs/cli': ^9.3.0
+      '@nestjs/common': ^9.3.12
+      '@nestjs/config': ^2.3.1
+      '@nestjs/core': ^9.3.12
+      '@nestjs/platform-express': ^9.3.12
+      '@nestjs/schematics': ^9.0.4
+      '@nestjs/swagger': ^6.2.1
+      '@nestjs/testing': ^9.3.12
+      '@niv/postgres': workspace:*
+      '@prisma/client': ^4.11.0
+      '@types/express': ^4.17.17
+      '@types/jest': 28.1.8
+      '@types/node': ^16.18.20
+      '@types/supertest': ^2.0.12
+      jest: 28.1.3
+      nestjs-zod: ^1.2.3
+      pg: ^8.10.0
+      prisma: ^4.11.0
+      reflect-metadata: ^0.1.13
+      rimraf: ^3.0.2
+      rxjs: ^7.8.0
+      source-map-support: ^0.5.21
+      supertest: ^6.3.3
+      ts-jest: 28.0.8
+      ts-loader: ^9.4.2
+      ts-node: ^10.9.1
+      typescript: ^4.9.5
+      zod: ^3.21.4
+    dependencies:
+      '@nestjs/common': 9.3.12_mnr6j2del53muneqly5h4y27ai
+      '@nestjs/config': 2.3.1_jy37pi22pqa22ux5geb72eebiu
+      '@nestjs/core': 9.3.12_qhubmme3ystyvorrsy6sfc2ome
+      '@nestjs/platform-express': 9.3.12_ge4qplnzbmfyi5znl534zhtkn4
+      '@nestjs/swagger': 6.2.1_bgmtsjzu2jyijhogwtog4e3a6e
+      '@niv/postgres': link:../../packages/postgres
+      '@prisma/client': 4.11.0_prisma@4.11.0
+      nestjs-zod: 1.2.3_kwb2a4f7bk4iyyo5b2u32jtvxm
+      pg: 8.10.0
+      prisma: 4.11.0
+      reflect-metadata: 0.1.13
+      rimraf: 3.0.2
+      rxjs: 7.8.0
+      zod: 3.21.4
+    devDependencies:
+      '@nestjs/cli': 9.3.0
+      '@nestjs/schematics': 9.0.4_typescript@4.9.5
+      '@nestjs/testing': 9.3.12_ckvy3xuqd5ydy3ipiq7jufha44
+      '@types/express': 4.17.17
+      '@types/jest': 28.1.8
+      '@types/node': 16.18.20
+      '@types/supertest': 2.0.12
+      jest: 28.1.3_sdvwijez77tgluqfi7lxjhoja4
+      source-map-support: 0.5.21
+      supertest: 6.3.3
+      ts-jest: 28.0.8_hvbmbnaebbdplfltlj4zjyjzbu
+      ts-loader: 9.4.2_a37q6j7dwawz22saey2vgkpwqm
+      ts-node: 10.9.1_zoixeg4epk3dp6zjuh3wmneici
+      typescript: 4.9.5
+
+  packages/postgres:
+    specifiers:
+      '@nestjs/cli': ^9.3.0
+      '@nestjs/common': ^9.3.12
+      '@nestjs/core': ^9.3.12
+      '@types/pg': ^8.6.6
+      pg: ^8.10.0
+      reflect-metadata: ^0.1.13
+      rxjs: ^7.8.0
+    dependencies:
+      '@nestjs/common': 9.3.12_mnr6j2del53muneqly5h4y27ai
+      '@nestjs/core': 9.3.12_jy37pi22pqa22ux5geb72eebiu
+      pg: 8.10.0
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+    devDependencies:
+      '@nestjs/cli': 9.3.0
+      '@types/pg': 8.6.6
 
 packages:
 
@@ -96,7 +120,7 @@ packages:
         optional: true
     dependencies:
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       jsonc-parser: 3.2.0
       rxjs: 6.6.7
       source-map: 0.7.4
@@ -112,7 +136,7 @@ packages:
         optional: true
     dependencies:
       ajv: 8.11.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.11.0
       chokidar: 3.5.3
       jsonc-parser: 3.2.0
       rxjs: 6.6.7
@@ -129,7 +153,7 @@ packages:
         optional: true
     dependencies:
       ajv: 8.12.0
-      ajv-formats: 2.1.1
+      ajv-formats: 2.1.1_ajv@8.12.0
       chokidar: 3.5.3
       jsonc-parser: 3.2.0
       rxjs: 6.6.7
@@ -942,6 +966,37 @@ packages:
       uuid: 9.0.0
     dev: false
 
+  /@nestjs/core/9.3.12_jy37pi22pqa22ux5geb72eebiu:
+    resolution: {integrity: sha512-Qe0ZjJo7bOlfudn7KHLppYrt5i4k1nR1+9d5ppYat2bb5knCIT4kIqblj666n+22/2zvsHRiTo015cLyLKsLRQ==}
+    requiresBuild: true
+    peerDependencies:
+      '@nestjs/common': ^9.0.0
+      '@nestjs/microservices': ^9.0.0
+      '@nestjs/platform-express': ^9.0.0
+      '@nestjs/websockets': ^9.0.0
+      reflect-metadata: ^0.1.12
+      rxjs: ^7.1.0
+    peerDependenciesMeta:
+      '@nestjs/microservices':
+        optional: true
+      '@nestjs/platform-express':
+        optional: true
+      '@nestjs/websockets':
+        optional: true
+    dependencies:
+      '@nestjs/common': 9.3.12_mnr6j2del53muneqly5h4y27ai
+      '@nuxtjs/opencollective': 0.3.2
+      fast-safe-stringify: 2.1.1
+      iterare: 1.2.1
+      path-to-regexp: 3.2.0
+      reflect-metadata: 0.1.13
+      rxjs: 7.8.0
+      tslib: 2.5.0
+      uid: 2.0.1
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@nestjs/core/9.3.12_qhubmme3ystyvorrsy6sfc2ome:
     resolution: {integrity: sha512-Qe0ZjJo7bOlfudn7KHLppYrt5i4k1nR1+9d5ppYat2bb5knCIT4kIqblj666n+22/2zvsHRiTo015cLyLKsLRQ==}
     requiresBuild: true
@@ -1295,6 +1350,14 @@ packages:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: true
 
+  /@types/pg/8.6.6:
+    resolution: {integrity: sha512-O2xNmXebtwVekJDD+02udOncjVcMZQuTEQEMpKJ0ZRf5E7/9JJX3izhKUcUifBkyKpljyUM6BTgy2trmviKlpw==}
+    dependencies:
+      '@types/node': 16.18.20
+      pg-protocol: 1.6.0
+      pg-types: 2.2.0
+    dev: true
+
   /@types/prettier/2.7.2:
     resolution: {integrity: sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==}
     dev: true
@@ -1623,8 +1686,21 @@ packages:
     hasBin: true
     dev: true
 
-  /ajv-formats/2.1.1:
+  /ajv-formats/2.1.1_ajv@8.11.0:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependencies:
+      ajv: ^8.0.0
+    peerDependenciesMeta:
+      ajv:
+        optional: true
+    dependencies:
+      ajv: 8.11.0
+    dev: true
+
+  /ajv-formats/2.1.1_ajv@8.12.0:
+    resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
+    peerDependencies:
+      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -1922,6 +1998,11 @@ packages:
 
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
+
+  /buffer-writer/2.0.0:
+    resolution: {integrity: sha512-a7ZpuTZU1TRtnwyCNW3I5dc0wWNC3VR9S++Ewyk2HHZdrO3CQJqSpd+95Us590V6AL7JqUAH2IwZ/398PmNFgw==}
+    engines: {node: '>=4'}
+    dev: false
 
   /buffer/5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
@@ -4128,6 +4209,10 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /packet-reader/1.0.0:
+    resolution: {integrity: sha512-HAKu/fG3HpHFO0AA8WE8q2g+gBJaZ9MG7fcKk+IJPLTGAD6Psw4443l+9DGRbOIh3/aXr7Phy0TjilYivJo5XQ==}
+    dev: false
+
   /parent-module/1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
@@ -4186,6 +4271,59 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /pg-connection-string/2.5.0:
+    resolution: {integrity: sha512-r5o/V/ORTA6TmUnyWZR9nCj1klXCO2CEKNRlVuJptZe85QuhFayC7WeMic7ndayT5IRIR0S0xFxFi2ousartlQ==}
+    dev: false
+
+  /pg-int8/1.0.1:
+    resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
+    engines: {node: '>=4.0.0'}
+
+  /pg-pool/3.6.0_pg@8.10.0:
+    resolution: {integrity: sha512-clFRf2ksqd+F497kWFyM21tMjeikn60oGDmqMT8UBrynEwVEX/5R5xd2sdvdo1cZCFlguORNpVuqxIj+aK4cfQ==}
+    peerDependencies:
+      pg: '>=8.0'
+    dependencies:
+      pg: 8.10.0
+    dev: false
+
+  /pg-protocol/1.6.0:
+    resolution: {integrity: sha512-M+PDm637OY5WM307051+bsDia5Xej6d9IR4GwJse1qA1DIhiKlksvrneZOYQq42OM+spubpcNYEo2FcKQrDk+Q==}
+
+  /pg-types/2.2.0:
+    resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
+    engines: {node: '>=4'}
+    dependencies:
+      pg-int8: 1.0.1
+      postgres-array: 2.0.0
+      postgres-bytea: 1.0.0
+      postgres-date: 1.0.7
+      postgres-interval: 1.2.0
+
+  /pg/8.10.0:
+    resolution: {integrity: sha512-ke7o7qSTMb47iwzOSaZMfeR7xToFdkE71ifIipOAAaLIM0DYzfOAXlgFFmYUIE2BcJtvnVlGCID84ZzCegE8CQ==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      pg-native: '>=3.0.1'
+    peerDependenciesMeta:
+      pg-native:
+        optional: true
+    dependencies:
+      buffer-writer: 2.0.0
+      packet-reader: 1.0.0
+      pg-connection-string: 2.5.0
+      pg-pool: 3.6.0_pg@8.10.0
+      pg-protocol: 1.6.0
+      pg-types: 2.2.0
+      pgpass: 1.0.5
+    dev: false
+
+  /pgpass/1.0.5:
+    resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
+    dependencies:
+      split2: 4.1.0
+    dev: false
+
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: true
@@ -4211,6 +4349,24 @@ packages:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
     dev: true
+
+  /postgres-array/2.0.0:
+    resolution: {integrity: sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==}
+    engines: {node: '>=4'}
+
+  /postgres-bytea/1.0.0:
+    resolution: {integrity: sha512-xy3pmLuQqRBZBXDULy7KbaitYqLcmxigw14Q5sj8QBVLqEwXfeybIKVWiqAXTlcvdvb0+xkOtDbfQMOf4lST1w==}
+    engines: {node: '>=0.10.0'}
+
+  /postgres-date/1.0.7:
+    resolution: {integrity: sha512-suDmjLVQg78nMK2UZ454hAG+OAW+HQPZ6n++TNDUX+L0+uUlLywnoxJKDou51Zm+zTCjrCl0Nq6J9C5hP9vK/Q==}
+    engines: {node: '>=0.10.0'}
+
+  /postgres-interval/1.2.0:
+    resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      xtend: 4.0.2
 
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -4608,6 +4764,11 @@ packages:
     deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: true
 
+  /split2/4.1.0:
+    resolution: {integrity: sha512-VBiJxFkxiXRlUIeyMQi8s4hgvKCSjtknJv/LVYbrgALPwf5zSKmEwV9Lst25AkvMDnvxODugjdl6KZgwKM1WYQ==}
+    engines: {node: '>= 10.x'}
+    dev: false
+
   /sprintf-js/1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
     dev: true
@@ -4789,30 +4950,6 @@ packages:
       webpack: 5.76.2
     dev: true
 
-  /terser-webpack-plugin/5.3.7_webpack@5.76.3:
-    resolution: {integrity: sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==}
-    engines: {node: '>= 10.13.0'}
-    peerDependencies:
-      '@swc/core': '*'
-      esbuild: '*'
-      uglify-js: '*'
-      webpack: ^5.1.0
-    peerDependenciesMeta:
-      '@swc/core':
-        optional: true
-      esbuild:
-        optional: true
-      uglify-js:
-        optional: true
-    dependencies:
-      '@jridgewell/trace-mapping': 0.3.17
-      jest-worker: 27.5.1
-      schema-utils: 3.1.1
-      serialize-javascript: 6.0.1
-      terser: 5.16.8
-      webpack: 5.76.3
-    dev: true
-
   /terser/5.16.8:
     resolution: {integrity: sha512-QI5g1E/ef7d+PsDifb+a6nnVgC4F22Bg6T0xrBrz6iloVB4PUkkunp6V8nzoOOZJIzjWVdAGqCdlKlhLq/TbIA==}
     engines: {node: '>=10'}
@@ -4876,7 +5013,7 @@ packages:
     hasBin: true
     dev: true
 
-  /ts-jest/28.0.8_mgg23zyyvjoe75wbzvxzqqpmne:
+  /ts-jest/28.0.8_hvbmbnaebbdplfltlj4zjyjzbu:
     resolution: {integrity: sha512-5FaG0lXmRPzApix8oFG8RKjAz4ehtm8yMKOTy5HX3fY6W8kmvOrmcY0hKDElW52FJov+clhUbrKAqofnj4mXTg==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
@@ -4897,6 +5034,7 @@ packages:
       esbuild:
         optional: true
     dependencies:
+      '@babel/core': 7.21.3
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
       jest: 28.1.3_sdvwijez77tgluqfi7lxjhoja4
@@ -4909,7 +5047,7 @@ packages:
       yargs-parser: 21.1.1
     dev: true
 
-  /ts-loader/9.4.2_t37drsge5fnqkss6ynqsf64hyi:
+  /ts-loader/9.4.2_a37q6j7dwawz22saey2vgkpwqm:
     resolution: {integrity: sha512-OmlC4WVmFv5I0PpaxYb+qGeGOdm5giHU7HwDDUjw59emP2UYMHy9fFSDcYgSNoH8sXcj4hGCSEhlDZ9ULeDraA==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -4921,7 +5059,7 @@ packages:
       micromatch: 4.0.5
       semver: 7.3.8
       typescript: 4.9.5
-      webpack: 5.76.3
+      webpack: 5.76.2
     dev: true
 
   /ts-node/10.9.1_zoixeg4epk3dp6zjuh3wmneici:
@@ -4962,15 +5100,6 @@ packages:
       chalk: 4.1.2
       enhanced-resolve: 5.12.0
       tsconfig-paths: 4.1.2
-    dev: true
-
-  /tsconfig-paths/4.1.0:
-    resolution: {integrity: sha512-AHx4Euop/dXFC+Vx589alFba8QItjF+8hf8LtmuiCwHyI4rHXQtOOENaM8kvYf5fR0dRChy3wzWIZ9WbB7FWow==}
-    engines: {node: '>=6'}
-    dependencies:
-      json5: 2.2.3
-      minimist: 1.2.8
-      strip-bom: 3.0.0
     dev: true
 
   /tsconfig-paths/4.1.2:
@@ -5163,46 +5292,6 @@ packages:
       schema-utils: 3.1.1
       tapable: 2.2.1
       terser-webpack-plugin: 5.3.7_webpack@5.76.2
-      watchpack: 2.4.0
-      webpack-sources: 3.2.3
-    transitivePeerDependencies:
-      - '@swc/core'
-      - esbuild
-      - uglify-js
-    dev: true
-
-  /webpack/5.76.3:
-    resolution: {integrity: sha512-18Qv7uGPU8b2vqGeEEObnfICyw2g39CHlDEK4I7NK13LOur1d0HGmGNKGT58Eluwddpn3oEejwvBPoP4M7/KSA==}
-    engines: {node: '>=10.13.0'}
-    hasBin: true
-    peerDependencies:
-      webpack-cli: '*'
-    peerDependenciesMeta:
-      webpack-cli:
-        optional: true
-    dependencies:
-      '@types/eslint-scope': 3.7.4
-      '@types/estree': 0.0.51
-      '@webassemblyjs/ast': 1.11.1
-      '@webassemblyjs/wasm-edit': 1.11.1
-      '@webassemblyjs/wasm-parser': 1.11.1
-      acorn: 8.8.2
-      acorn-import-assertions: 1.8.0_acorn@8.8.2
-      browserslist: 4.21.5
-      chrome-trace-event: 1.0.3
-      enhanced-resolve: 5.12.0
-      es-module-lexer: 0.9.3
-      eslint-scope: 5.1.1
-      events: 3.3.0
-      glob-to-regexp: 0.4.1
-      graceful-fs: 4.2.11
-      json-parse-even-better-errors: 2.3.1
-      loader-runner: 4.3.0
-      mime-types: 2.1.35
-      neo-async: 2.6.2
-      schema-utils: 3.1.1
-      tapable: 2.2.1
-      terser-webpack-plugin: 5.3.7_webpack@5.76.3
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:

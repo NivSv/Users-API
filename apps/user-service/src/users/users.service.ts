@@ -1,13 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Department, User } from '@prisma/client';
+import { PostgresService } from '@niv/postgres';
+import { z } from 'nestjs-zod/z';
 import { PrismaService } from '../prisma.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { FindFiltersDto } from './dtos/find-filters.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { User, userSchema } from './users.schema';
 
 @Injectable()
 export class UsersService {
   @Inject(PrismaService) private readonly prisma!: PrismaService;
+  @Inject(PostgresService) private readonly postgres!: PostgresService;
 
   async Create(createUserDto: CreateUserDto, department: Department) {
     return this.prisma.user.create({
@@ -22,26 +25,11 @@ export class UsersService {
     });
   }
 
-  async GetAll(filters: FindFiltersDto) {
-    return this.prisma.user.findMany({
-      where: {
-        firstName: {
-          contains: filters.firstName || undefined,
-        },
-        lastName: {
-          contains: filters.lastName || undefined,
-        },
-        title: {
-          contains: filters.title || undefined,
-        },
-        email: {
-          contains: filters.email || undefined,
-        },
-        image: {
-          contains: filters.image || undefined,
-        },
-      },
-    });
+  async GetAll(filters: FindFiltersDto): Promise<Array<User>> {
+    const res = this.postgres.query('SELECT * FROM users');
+    const users = z.array(userSchema).parse(res);
+
+    return z.array(userSchema).parse(res);
   }
 
   async Get(id: number): Promise<User | null> {

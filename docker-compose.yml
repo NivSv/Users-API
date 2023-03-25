@@ -13,6 +13,8 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: example
       POSTGRES_DB: users-api
+    volumes:
+      - ./init-scripts:/docker-entrypoint-initdb.d
 
   adminer:
     container_name: adminer
