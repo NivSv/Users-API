@@ -1,4 +1,4 @@
-import { createZodDto } from 'nestjs-zod';
+import { createZodDto, zodToOpenAPI } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
 
 const UserSchema = z.object({

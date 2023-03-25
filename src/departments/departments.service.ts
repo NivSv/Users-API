@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { Department } from '@prisma/client';
+import { CreateDepartmentDto } from './dtos/create-department.dto';
 
 @Injectable()
 export class DepartmentsService {
@@ -26,11 +27,11 @@ export class DepartmentsService {
     return this.prisma.department.findMany();
   }
 
-  async Create(name: string, description: string): Promise<Department> {
+  async Create(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
     return this.prisma.department.create({
       data: {
-        name: name,
-        description: description,
+        name: createDepartmentDto.name,
+        description: createDepartmentDto.description,
       },
     });
   }

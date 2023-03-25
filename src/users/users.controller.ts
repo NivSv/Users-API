@@ -21,6 +21,7 @@ import {
 import { DepartmentsService } from '../departments/departments.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { FindFiltersDto } from './dtos/find-filters.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 import { UserDto } from './users.dto';
 import { UsersMapper } from './users.mapper';
 import { UsersService } from './users.service';
@@ -76,9 +77,26 @@ export class UsersController {
     return this.usersMapper.toDto(userEntity);
   }
 
+  @ApiOkResponse({ type: UserDto })
+  @ApiNotFoundResponse({ description: 'user not found' })
+  @ApiNotFoundResponse({ description: 'department not found' })
   @Patch()
-  async update(@Body() createUserDto: CreateUserDto): Promise<any> {
-    return createUserDto;
+  async update(@Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
+    const entity = await this.usersService.Get(updateUserDto.id);
+    if (!entity)
+      throw new NotFoundException(
+        `user with id '${updateUserDto.id}' does not exist`,
+      );
+    const department = await this.departmentsService.GetByName(
+      updateUserDto.department,
+    );
+    if (!department)
+      throw new NotFoundException(
+        `department with that name '${updateUserDto.department}' does not exist`,
+      );
+    return this.usersMapper.toDto(
+      await this.usersService.Update(entity, updateUserDto, department),
+    );
   }
 
   @ApiOkResponse({ description: 'user deleted' })

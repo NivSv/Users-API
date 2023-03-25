@@ -3,6 +3,7 @@ import { Department, User } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { FindFiltersDto } from './dtos/find-filters.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -47,6 +48,25 @@ export class UsersService {
     return await this.prisma.user.findUnique({
       where: {
         id: id,
+      },
+    });
+  }
+
+  async Update(
+    user: User,
+    updateUserDto: UpdateUserDto,
+    department: Department,
+  ): Promise<User> {
+    return await this.prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        firstName: updateUserDto.firstName,
+        lastName: updateUserDto.lastName,
+        title: updateUserDto.title,
+        image: updateUserDto.image,
+        departmentId: department.id,
       },
     });
   }

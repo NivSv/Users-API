@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DepartmentsService } from '../departments/departments.service';
 import { UsersController } from './users.controller';
+import { UsersMapper } from './users.mapper';
 import { UsersService } from './users.service';
 
 describe('UsersController', () => {
@@ -9,7 +10,7 @@ describe('UsersController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [UsersService, DepartmentsService],
+      providers: [UsersService, DepartmentsService, UsersMapper],
     })
       .overrideProvider(UsersService)
       .useValue({})
