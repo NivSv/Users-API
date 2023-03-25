@@ -3,27 +3,29 @@
 
 generator client {
     provider = "prisma-client-js"
-    output   = "../node_modules/.prisma/client" // <-- generate in your package node_modules, not the root
 }
 
 datasource db {
-    provider = "mysql"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
 model User {
-    id        Int      @id @default(autoincrement())
-    firstName String
-    lastName  String
-    title     String?
-    email     String   @unique
-    image     String?
-    createdAt DateTime @default(now())
+    id           Int         @id @default(autoincrement())
+    firstName    String
+    lastName     String
+    title        String?
+    email        String      @unique
+    image        String?
+    Department   Department? @relation(fields: [departmentId], references: [id])
+    departmentId Int?
+    createdAt    DateTime    @default(now())
 }
 
 model Department {
     id          Int      @id @default(autoincrement())
     name        String
     description String?
+    users       User[]
     createdAt   DateTime @default(now())
 }
