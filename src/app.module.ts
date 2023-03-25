@@ -5,6 +5,8 @@ import { UsersModule } from './users/users.module';
 import configuration from './config/configuration';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { APP_PIPE } from '@nestjs/core';
+import { SeedModule } from './seed/seed.module';
+import { DepartmentsModule } from './departments/departments.module';
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import { APP_PIPE } from '@nestjs/core';
       load: [configuration],
     }),
     UsersModule,
+    SeedModule,
+    DepartmentsModule,
   ],
   controllers: [HealthController],
   providers: [
