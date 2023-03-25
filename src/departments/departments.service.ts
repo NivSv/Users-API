@@ -26,11 +26,11 @@ export class DepartmentsService {
     return this.prisma.department.findMany();
   }
 
-  async Create(name: string): Promise<Department> {
+  async Create(name: string, description: string): Promise<Department> {
     return this.prisma.department.create({
       data: {
         name: name,
-        description: '',
+        description: description,
       },
     });
   }

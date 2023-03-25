@@ -21,6 +21,8 @@ import {
 import { DepartmentsService } from '../departments/departments.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { FindFiltersDto } from './dtos/find-filters.dto';
+import { UserDto } from './users.dto';
+import { UsersMapper } from './users.mapper';
 import { UsersService } from './users.service';
 
 @ApiTags('users')
@@ -29,11 +31,12 @@ export class UsersController {
   @Inject(UsersService) private readonly usersService!: UsersService;
   @Inject(DepartmentsService)
   private readonly departmentsService!: DepartmentsService;
+  @Inject(UsersMapper) private readonly usersMapper!: UsersMapper;
 
-  @ApiCreatedResponse({ type: CreateUserDto })
+  @ApiCreatedResponse({ type: UserDto })
   @ApiNotFoundResponse({ description: 'department not found' })
   @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<any> {
+  async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
     const department = await this.departmentsService.GetByName(
       createUserDto.department,
     );
@@ -41,9 +44,12 @@ export class UsersController {
       throw new NotFoundException(
         `department with that name '${createUserDto.department}' does not exist`,
       );
-    return await this.usersService.Create(createUserDto, department);
+    return this.usersMapper.toDto(
+      await this.usersService.Create(createUserDto, department),
+    );
   }
 
+  @ApiOkResponse({ type: UserDto, isArray: true })
   @ApiQuery({ name: 'firstName', required: false })
   @ApiQuery({ name: 'lastName', required: false })
   @ApiQuery({ name: 'title', required: false })
@@ -51,14 +57,23 @@ export class UsersController {
   @ApiQuery({ name: 'image', required: false })
   @ApiQuery({ name: 'department', required: false })
   @Get()
-  async findAll(@Query() findFiltersDto: FindFiltersDto): Promise<any> {
-    return await this.usersService.GetAll(findFiltersDto);
+  async findAll(
+    @Query() findFiltersDto: FindFiltersDto,
+  ): Promise<Array<UserDto>> {
+    return this.usersMapper.toDtos(
+      await this.usersService.GetAll(findFiltersDto),
+    );
   }
 
+  @ApiNotFoundResponse({ description: 'user not found' })
+  @ApiOkResponse({ type: UserDto })
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<any> {
+  async findOne(@Param('id') id: string): Promise<UserDto> {
     if (!id) throw new BadRequestException('id is required');
-    return id;
+    const userEntity = await this.usersService.Get(parseInt(id));
+    if (!userEntity)
+      throw new NotFoundException(`user with id '${id}' does not exist`);
+    return this.usersMapper.toDto(userEntity);
   }
 
   @Patch()

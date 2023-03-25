@@ -19,7 +19,10 @@ export class SeedService implements OnApplicationBootstrap {
     if (departments.length === 0 && users.length === 0) {
       Logger.log('Seeding data...');
       for (const department of DepartmentsSeed) {
-        await this.departmentsService.Create(department.name);
+        await this.departmentsService.Create(
+          department.name,
+          department.description,
+        );
       }
       const afterSeedDepartments = await this.departmentsService.GetAll();
       new Array(UsersNumberSeed)
