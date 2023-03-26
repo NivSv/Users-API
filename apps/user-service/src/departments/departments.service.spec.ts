@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { PostgresService } from '@niv/postgres'
+import { UsersService } from '../users/users.service'
 import { DepartmentsService } from './departments.service'
 
 describe('DepartmentsService', () => {
@@ -7,7 +8,14 @@ describe('DepartmentsService', () => {
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [DepartmentsService, PostgresService],
+            providers: [
+                DepartmentsService,
+                PostgresService,
+                {
+                    provide: UsersService,
+                    useValue: {},
+                },
+            ],
         })
             .overrideProvider(PostgresService)
             .useValue({})

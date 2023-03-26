@@ -43,8 +43,6 @@ describe('UsersService', () => {
         it('should return a list of users', async () => {
             monkPostgresService.query.mockResolvedValue([userStub])
             const users = await userService.GetAll({})
-            console.log({ users })
-
             expect(users).toEqual([userStub])
         })
 
@@ -55,74 +53,49 @@ describe('UsersService', () => {
         })
     })
 
-    // describe('Create', () => {
-    //     beforeEach(() => {
-    //         monkPostgresService.query.mockRestore()
-    //     })
+    describe('Create', () => {
+        it('should create a new user and return it', async () => {
+            monkPostgresService.query.mockResolvedValue([userStub])
+            const createdUser = await userService.Create(userStub, {
+                id: userStub.department_id,
+                name: 'Marketing',
+            })
+            expect(createdUser).toEqual(userStub)
+        })
 
-    //     it('should create a user', async () => {
-    //         const user = await userService.Create(userStub, {
-    //             id: userStub.department_id,
-    //             name: 'Marketing',
-    //         })
-    //         expect(user).toEqual(userStub)
-    //     })
+        it('should throw an error if creation was not success', async () => {
+            monkPostgresService.query.mockRejectedValue(
+                new Error('This is a test error :)')
+            )
+            expect(
+                userService.Create(userStub, {
+                    id: 2,
+                    name: 'Sales',
+                })
+            ).rejects.toThrowError(INTERNAL_SERVER_ERROR_TEXT)
+        })
+    })
 
-    //     it('should throw an error if creation was not success', async () => {
-    //         monkPostgresService.query.mockRejectedValue(new Error('Error'))
-    //         expect(
-    //             userService.Create(userStub, {
-    //                 id: 2,
-    //                 name: 'Sales',
-    //             })
-    //         ).rejects.toThrowError(INTERNAL_SERVER_ERROR_TEXT)
-    //     })
-    // })
+    describe('Update', () => {
+        it('should update a user and return the updated user', async () => {
+            monkPostgresService.query.mockResolvedValue([userStub])
+            const user = await userService.Update(userStub, userStub, {
+                id: userStub.department_id,
+                name: 'Engineering',
+            })
+            expect(user).toEqual(userStub)
+        })
 
-    //     describe('Update', () => {
-    //         it('should update a user', async () => {
-    //             const updatedUser = {
-    //                 ...userStub,
-    //                 name: 'Updated Name',
-    //             }
-    //             const user = await userService.Update(userStub, updatedUser, {
-    //                 id: userStub.department_id,
-    //                 name: 'Engineering',
-    //             })
-    //             expect(user).toMatchObject(updatedUser)
-    //         })
-
-    //         it('should throw an error if user does not exist', async () => {
-    //             monkPostgresService.query.mockResolvedValue([])
-    //             expect(
-    //                 userService.Update(
-    //                     userStub,
-    //                     {
-    //                         ...userStub,
-    //                         firstName: 'Updated Name',
-    //                     },
-    //                     {
-    //                         id: userStub.department_id,
-    //                         name: 'Engineering',
-    //                     }
-    //                 )
-    //             ).rejects.toThrowError('User not found')
-    //         })
-
-    //         it('should throw an error if department does not exist', async () => {
-    //             expect(
-    //                 userService.Update(
-    //                     userStub,
-    //                     {
-    //                         ...userStub,
-    //                         firstName: 'Updated Name',
-    //                     },
-    //                     {
-    //                         id: 2,
-    //                         name: 'Sales',
-    //                     }
-    //                 )
-    //             ).rejects.toThrowError('Department not found')
-    //         })
-    //     })
+        it('should throw an error if updating was not success', async () => {
+            monkPostgresService.query.mockRejectedValue(
+                new Error('This is a test error :)')
+            )
+            expect(
+                userService.Create(userStub, {
+                    id: 2,
+                    name: 'Sales',
+                })
+            ).rejects.toThrowError(INTERNAL_SERVER_ERROR_TEXT)
+        })
+    })
 })

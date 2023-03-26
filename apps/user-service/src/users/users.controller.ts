@@ -7,12 +7,11 @@ import {
     Inject,
     NotFoundException,
     Param,
-    Patch,
     Post,
+    Put,
     Query,
 } from '@nestjs/common'
 import {
-    ApiBadRequestResponse,
     ApiCreatedResponse,
     ApiNotFoundResponse,
     ApiOkResponse,
@@ -81,7 +80,7 @@ export class UsersController {
     @ApiOkResponse({ type: UserDto })
     @ApiNotFoundResponse({ description: 'user not found' })
     @ApiNotFoundResponse({ description: 'department not found' })
-    @Patch()
+    @Put()
     async update(@Body() updateUserDto: UpdateUserDto): Promise<UserDto> {
         const entity = await this.usersService.Get(updateUserDto.id)
         if (!entity)
