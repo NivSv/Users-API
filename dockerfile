@@ -17,6 +17,7 @@ COPY ./apps/user-service/package.json          apps/user-service
 COPY ./apps/user-service/env.d.ts              apps/user-service
 COPY ./apps/user-service/.env.example          apps/user-service
 COPY ./apps/user-service/nest-cli.json         apps/user-service
+COPY ./apps/user-service/tsconfig.json         apps/user-service
 COPY ./apps/user-service/tsconfig.build.json   apps/user-service
 
 RUN pnpm install --ignore-scripts --frozen-lockfile
