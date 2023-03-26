@@ -5,7 +5,7 @@ const DepartmentSchema = z.object({
     id: z.number().describe('Id'),
     name: z.string().min(2).describe('Name'),
     description: z.string().optional().describe('Description'),
-    users: z.array(z.number()).optional().describe('Users'),
+    userCount: z.number().optional().describe('User count'),
 })
 
 export class DepartmentDto extends createZodDto(DepartmentSchema) {}

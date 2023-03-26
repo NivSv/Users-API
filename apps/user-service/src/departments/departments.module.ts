@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common'
 import { PostgresModule } from '@niv/postgres'
 import { ConfigService } from '../config/config.service'
+import { UsersService } from '../users/users.service'
 import { DepartmentsController } from './departments.controller'
+import { DepartmentsMapper } from './departments.mapper'
 import { DepartmentsService } from './departments.service'
 
 const configService = new ConfigService()
@@ -17,6 +19,6 @@ const configService = new ConfigService()
         }),
     ],
     controllers: [DepartmentsController],
-    providers: [DepartmentsService],
+    providers: [DepartmentsService, DepartmentsMapper, UsersService],
 })
 export class DepartmentsModule {}

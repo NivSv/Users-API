@@ -23,7 +23,7 @@ export class UsersMapper {
         }
     }
 
-    async toDtos(users: User[]): Promise<UserDto[]> {
+    async toDtos(users: Array<User>): Promise<Array<UserDto>> {
         return await Promise.all(users.map((user) => this.toDto(user)))
     }
 }

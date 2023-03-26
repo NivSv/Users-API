@@ -31,3 +31,167 @@ INSERT INTO users (first_name, last_name, title, email, image, department_id) VA
   ('Karen', 'Miller', 'Business Analyst', 'karen.miller@example.com', 'https://example.com/karen.jpg', 2),
   ('David', 'Clark', 'Project Manager', 'david.clark@example.com', 'https://example.com/david.jpg', 1),
   ('Amy', 'Taylor', 'HR Manager', 'amy.taylor@example.com', 'https://example.com/amy.jpg', 4);
+
+-- Stored procedure for creating a user
+CREATE OR REPLACE PROCEDURE create_user(
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  title VARCHAR(255),
+  email VARCHAR(255),
+  image VARCHAR(255),
+  department_id INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  INSERT INTO users (first_name, last_name, title, email, image, department_id)
+  VALUES (first_name, last_name, title, email, image, department_id);
+END;
+$$;
+
+-- Stored procedure for updating a user
+CREATE OR REPLACE PROCEDURE update_user(
+  user_id INTEGER,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  title VARCHAR(255),
+  email VARCHAR(255),
+  image VARCHAR(255),
+  department_id INTEGER
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  UPDATE users
+  SET
+    first_name = COALESCE(first_name, users.first_name),
+    last_name = COALESCE(last_name, users.last_name),
+    title = COALESCE(title, users.title),
+    email = COALESCE(email, users.email),
+    image = COALESCE(image, users.image),
+    department_id = COALESCE(department_id, users.department_id)
+  WHERE id = user_id;
+END;
+$$;
+
+-- Stored procedure for getting a user by ID
+CREATE OR REPLACE FUNCTION get_user(user_id INTEGER)
+RETURNS users AS $$
+BEGIN
+  RETURN (
+    SELECT * FROM users WHERE id = user_id
+  );
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored procedure for deleting a user by ID
+CREATE OR REPLACE PROCEDURE delete_user(user_id INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DELETE FROM users WHERE id = user_id;
+END;
+$$;
+
+-- Stored procedure for creating a department
+CREATE OR REPLACE PROCEDURE create_department(
+  name VARCHAR(255),
+  description VARCHAR(255)
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  INSERT INTO departments (name, description)
+  VALUES (name, description);
+END;
+$$;
+
+-- Stored procedure for updating a department
+CREATE OR REPLACE PROCEDURE update_department(
+  department_id INTEGER,
+  name VARCHAR(255),
+  description VARCHAR(255)
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  UPDATE departments
+  SET
+    name = COALESCE(name, departments.name),
+    description = COALESCE(description, departments.description)
+  WHERE id = department_id;
+END;
+$$;
+
+-- Stored procedure for getting all users in a department
+CREATE OR REPLACE FUNCTION get_users(
+  filters json DEFAULT '{}'
+)
+RETURNS TABLE (
+  id INTEGER,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  title VARCHAR(255),
+  email VARCHAR(255),
+  image VARCHAR(255),
+  department_id INTEGER,
+  department_name VARCHAR(255)
+)
+AS $$
+DECLARE
+  firstNameFilter TEXT := '';
+  lastNameFilter TEXT := '';
+  emailFilter TEXT := '';
+  imageFilter TEXT := '';
+  titleFilter TEXT := '';
+  departmentNameFilter TEXT := '';
+BEGIN
+  IF filters->>'firstName' IS NOT NULL THEN
+    firstNameFilter := format('first_name ILIKE ''%%%s%%'' AND', filters->>'firstName');
+  END IF;
+  
+  IF filters->>'lastName' IS NOT NULL THEN
+    lastNameFilter := format('last_name ILIKE ''%%%s%%'' AND', filters->>'lastName');
+  END IF;
+  
+  IF filters->>'email' IS NOT NULL THEN
+    emailFilter := format('email ILIKE ''%%%s%%'' AND', filters->>'email');
+  END IF;
+  
+  IF filters->>'image' IS NOT NULL THEN
+    imageFilter := format('image ILIKE ''%%%s%%'' AND', filters->>'image');
+  END IF;
+  
+  IF filters->>'title' IS NOT NULL THEN
+    titleFilter := format('title ILIKE ''%%%s%%'' AND', filters->>'title');
+  END IF;
+  
+  IF filters->>'departmentName' IS NOT NULL THEN
+    departmentNameFilter := format('departments.name ILIKE ''%%%s%%'' AND', filters->>'departmentName');
+  END IF;
+  
+  RETURN QUERY EXECUTE format('
+    SELECT users.*, departments.name AS department_name
+    FROM users
+    LEFT JOIN departments ON users.department_id = departments.id
+    WHERE
+      %s
+      %s
+      %s
+      %s
+      %s
+      %s
+      first_name IS NOT NULL AND last_name IS NOT NULL
+  ', firstNameFilter, lastNameFilter, emailFilter, imageFilter, titleFilter, departmentNameFilter);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored procedure for getting all departments
+CREATE OR REPLACE FUNCTION get_all_departments()
+RETURNS SETOF departments AS $$
+BEGIN
+  RETURN QUERY (
+    SELECT * FROM departments
+  );
+END;
+$$ LANGUAGE plpgsql;

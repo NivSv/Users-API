@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { DepartmentsController } from './departments.controller'
+import { DepartmentsMapper } from './departments.mapper'
 import { DepartmentsService } from './departments.service'
 
 describe('DepartmentsController', () => {
@@ -8,11 +9,17 @@ describe('DepartmentsController', () => {
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             controllers: [DepartmentsController],
-            providers: [DepartmentsService],
-        })
-            .overrideProvider(DepartmentsService)
-            .useValue({})
-            .compile()
+            providers: [
+                {
+                    provide: DepartmentsService,
+                    useValue: {},
+                },
+                {
+                    provide: DepartmentsMapper,
+                    useValue: {},
+                },
+            ],
+        }).compile()
 
         controller = module.get<DepartmentsController>(DepartmentsController)
     })

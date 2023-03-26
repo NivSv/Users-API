@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common'
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { DepartmentDto } from './departments.dto'
+import { DepartmentsMapper } from './departments.mapper'
 import { DepartmentsService } from './departments.service'
 import { CreateDepartmentDto } from './dtos/create-department.dto'
 
@@ -18,11 +19,15 @@ import { CreateDepartmentDto } from './dtos/create-department.dto'
 export class DepartmentsController {
     @Inject(DepartmentsService)
     private readonly departmentsService!: DepartmentsService
+    @Inject(DepartmentsMapper)
+    private readonly departmentsMapper!: DepartmentsMapper
 
     @ApiOkResponse({ type: DepartmentDto, isArray: true })
     @Get()
-    async findAll(): Promise<Array<any>> {
-        return this.departmentsService.GetAll()
+    async findAll(): Promise<Array<DepartmentDto>> {
+        return this.departmentsMapper.toDtos(
+            await this.departmentsService.GetAll()
+        )
     }
 
     @Post()

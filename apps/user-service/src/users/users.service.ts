@@ -1,7 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common'
+import {
+    ConflictException,
+    Inject,
+    Injectable,
+    InternalServerErrorException,
+    Logger,
+} from '@nestjs/common'
 import { PostgresService } from '@niv/postgres'
 import { z } from 'nestjs-zod/z'
 import { Department } from '../departments/departments.schema'
+import { INTERNAL_SERVER_ERROR_TEXT } from '../errors.constants'
 import { CreateUserDto } from './dtos/create-user.dto'
 import { FindFiltersDto } from './dtos/find-filters.dto'
 import { UpdateUserDto } from './dtos/update-user.dto'
@@ -12,10 +19,15 @@ export class UsersService {
     @Inject(PostgresService) private readonly postgres!: PostgresService
 
     async Create(createUserDto: CreateUserDto, department: Department) {
-        const user = await this.postgres.query<User>(
-            `INSERT INTO users (first_name, last_name, title, email, image, department_id) VALUES ('${createUserDto.firstName}', '${createUserDto.lastName}', '${createUserDto.title}', '${createUserDto.email}', '${createUserDto.image}', ${department.id});`
-        )
-        return z.array(userSchema).parse(user)[0]
+        try {
+            const user = await this.postgres.query<User>(
+                `INSERT INTO users (first_name, last_name, title, email, image, department_id) VALUES ('${createUserDto.firstName}', '${createUserDto.lastName}', '${createUserDto.title}', '${createUserDto.email}', '${createUserDto.image}', ${department.id});`
+            )
+            return z.array(userSchema).parse(user)[0]
+        } catch (error: unknown) {
+            Logger.error(error)
+            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR_TEXT)
+        }
     }
 
     async GetAll(filters: FindFiltersDto): Promise<Array<User>> {
@@ -56,11 +68,21 @@ export class UsersService {
         return z.array(userSchema).parse(res)
     }
 
-    async Get(id: number): Promise<User | null> {
-        const user = await this.postgres.query<User>(
-            `SELECT * FROM users WHERE id = ${id};`
+    async GetAllByDepartmentId(departmentId: number): Promise<Array<User>> {
+        const users = await this.postgres.query<User>(
+            'SELECT * FROM users WHERE department_id = $1',
+            [departmentId]
         )
-        return z.array(userSchema).parse(user)[0]
+        return z.array(userSchema).parse(users)
+    }
+
+    async Get(id: number): Promise<User | null> {
+        const users = await this.postgres.query<User>(
+            'SELECT * FROM users WHERE id = $1',
+            [id]
+        )
+        if (users.length == 0) return null
+        return z.array(userSchema).parse(users)[0]
     }
 
     async Update(
