@@ -34,7 +34,7 @@ describe('UsersService', () => {
         })
 
         it('should return null if user does not exist', async () => {
-            monkPostgresService.query.mockResolvedValue([])
+            monkPostgresService.query.mockResolvedValue(null)
             expect(await userService.Get(2)).toBeNull()
         })
     })

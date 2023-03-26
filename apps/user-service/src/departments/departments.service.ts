@@ -9,7 +9,7 @@ import { z } from 'nestjs-zod/z'
 import { INTERNAL_SERVER_ERROR_TEXT } from '../errors.constants'
 import { Department, departmentSchema } from './departments.schema'
 import { CreateDepartmentDto } from './dtos/create-department.dto'
-import { GET_ALL_DEPARTMENTS } from './queries.constants'
+import { GET_ALL_DEPARTMENTS } from './departments.queries'
 
 @Injectable()
 export class DepartmentsService {
@@ -44,7 +44,7 @@ export class DepartmentsService {
 
     async GetAll(): Promise<Array<Department>> {
         try {
-            const res = await this.postgres.query('SELECT * FROM departments;')
+            const res = await this.postgres.query(GET_ALL_DEPARTMENTS)
             return z.array(departmentSchema).parse(res)
         } catch (error: unknown) {
             Logger.error(error)

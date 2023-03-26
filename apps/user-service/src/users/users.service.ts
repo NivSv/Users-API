@@ -12,17 +12,40 @@ import { INTERNAL_SERVER_ERROR_TEXT } from '../errors.constants'
 import { CreateUserDto } from './dtos/create-user.dto'
 import { FindFiltersDto } from './dtos/find-filters.dto'
 import { UpdateUserDto } from './dtos/update-user.dto'
+import {
+    CREATE_USER,
+    DELETE_USER,
+    GET_ALL_USERS,
+    GET_ALL_USERS_BY_DEPARTMENT_ID,
+    GET_USER_BY_ID,
+    UPDATE_USER,
+} from './users.queries'
 import { User, userSchema } from './users.schema'
 
 @Injectable()
 export class UsersService {
     @Inject(PostgresService) private readonly postgres!: PostgresService
 
-    async Create(createUserDto: CreateUserDto, department: Department) {
+    /**
+     * Create a new user
+     * @param createUserDto CreateUserDto
+     * @param department Department
+     * @returns Promise user
+     *
+     */
+    async Create(
+        createUserDto: CreateUserDto,
+        department: Department
+    ): Promise<User> {
         try {
-            const user = await this.postgres.query<User>(
-                `INSERT INTO users (first_name, last_name, title, email, image, department_id) VALUES ('${createUserDto.firstName}', '${createUserDto.lastName}', '${createUserDto.title}', '${createUserDto.email}', '${createUserDto.image}', ${department.id});`
-            )
+            const user = await this.postgres.query(CREATE_USER, [
+                createUserDto.firstName,
+                createUserDto.lastName,
+                createUserDto.title,
+                createUserDto.email,
+                createUserDto.image,
+                department.id,
+            ])
             return z.array(userSchema).parse(user)[0]
         } catch (error: unknown) {
             Logger.error(error)
@@ -30,73 +53,96 @@ export class UsersService {
         }
     }
 
-    async GetAll(filters: FindFiltersDto): Promise<Array<User>> {
-        const firstNameFilter = filters.firstName
-            ? `first_name ILIKE '%${filters.firstName}%' AND`
-            : ''
-        const lastNameFilter = filters.lastName
-            ? `last_name ILIKE '%${filters.lastName}%' AND`
-            : ''
-        const emailFilter = filters.email
-            ? `email ILIKE '%${filters.email}%' AND`
-            : ''
-        const imageFilter = filters.image
-            ? `image ILIKE '%${filters.image}%' AND`
-            : ''
-        const titleFilter = filters.title
-            ? `title ILIKE '%${filters.title}%' AND`
-            : ''
-        const departmentNameFilter = filters.departmentName
-            ? `departments.name ILIKE '%${filters.departmentName}%' AND`
-            : ''
-        const query = `
-      SELECT users.*, departments.name AS department_name
-      FROM users
-      LEFT JOIN departments ON users.department_id = departments.id
-      WHERE
-        ${firstNameFilter}
-        ${lastNameFilter}
-        ${emailFilter}
-        ${imageFilter}
-        ${titleFilter}
-        ${departmentNameFilter}
-        first_name IS NOT NULL AND last_name IS NOT NULL
-    `
-        const res = await this.postgres.query<
-            Array<User & { department_name?: string }>
-        >(query)
-        return z.array(userSchema).parse(res)
+    /**
+     * Get all users with optional filters
+     * @param filters FindFiltersDto | undefined
+     * @returns Promise array of users
+     */
+    async GetAll(filters?: FindFiltersDto): Promise<Array<User>> {
+        try {
+            const res = await this.postgres.query(GET_ALL_USERS, [
+                filters || {},
+            ])
+            return z.array(userSchema).parse(res)
+        } catch (error: unknown) {
+            Logger.error(error)
+            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR_TEXT)
+        }
     }
 
+    /**
+     * Get all users by department id
+     * @param departmentId number
+     * @returns Promise array of users
+     */
     async GetAllByDepartmentId(departmentId: number): Promise<Array<User>> {
-        const users = await this.postgres.query<User>(
-            'SELECT * FROM users WHERE department_id = $1',
-            [departmentId]
-        )
-        return z.array(userSchema).parse(users)
+        try {
+            const users = await this.postgres.query<User>(
+                GET_ALL_USERS_BY_DEPARTMENT_ID,
+                [departmentId]
+            )
+            return z.array(userSchema).parse(users)
+        } catch (error: unknown) {
+            Logger.error(error)
+            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR_TEXT)
+        }
     }
 
+    /**
+     * Get a user by id
+     * @param id number
+     * @returns Promise user or null
+     */
     async Get(id: number): Promise<User | null> {
-        const users = await this.postgres.query<User>(
-            'SELECT * FROM users WHERE id = $1',
-            [id]
-        )
-        if (users.length == 0) return null
-        return z.array(userSchema).parse(users)[0]
+        try {
+            const users = await this.postgres.query(GET_USER_BY_ID, [id])
+            if (!users) return null
+            return z.array(userSchema).parse(users)[0]
+        } catch (error: unknown) {
+            Logger.error(error)
+            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR_TEXT)
+        }
     }
 
+    /**
+     * Update a user
+     * @param user User
+     * @param updateUserDto UpdateUserDto
+     * @param department Department
+     * @returns Promise user
+     */
     async Update(
         user: User,
         updateUserDto: UpdateUserDto,
         department: Department
     ): Promise<User> {
-        const users = await this.postgres.query<User>(
-            `UPDATE users SET first_name = '${updateUserDto.firstName}', last_name = '${updateUserDto.lastName}', title = '${updateUserDto.title}', email = '${updateUserDto.email}', image = '${updateUserDto.image}', department_id = ${department.id} WHERE id = ${user.id};`
-        )
-        return z.array(userSchema).parse(users)[0]
+        try {
+            const users = await this.postgres.query(UPDATE_USER, [
+                user.id,
+                updateUserDto.firstName,
+                updateUserDto.lastName,
+                updateUserDto.title,
+                updateUserDto.email,
+                updateUserDto.image,
+                department.id,
+            ])
+            return z.array(userSchema).parse(users)[0]
+        } catch (error: unknown) {
+            Logger.error(error)
+            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR_TEXT)
+        }
     }
 
+    /**
+     * Delete a user
+     * @param user User
+     */
     async Delete(user: User): Promise<void> {
-        await this.postgres.query(`DELETE FROM users WHERE id = ${user.id};`)
+        try {
+            await this.postgres.query(DELETE_USER, [user.id])
+        } catch (error: unknown) {
+            Logger.error(error)
+            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR_TEXT)
+        }
     }
 }

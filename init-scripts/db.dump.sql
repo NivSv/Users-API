@@ -33,7 +33,7 @@ INSERT INTO users (first_name, last_name, title, email, image, department_id) VA
   ('Amy', 'Taylor', 'HR Manager', 'amy.taylor@example.com', 'https://example.com/amy.jpg', 4);
 
 -- Stored procedure for creating a user
-CREATE OR REPLACE PROCEDURE create_user(
+CREATE OR REPLACE FUNCTION create_user(
   first_name VARCHAR(255),
   last_name VARCHAR(255),
   title VARCHAR(255),
@@ -41,16 +41,22 @@ CREATE OR REPLACE PROCEDURE create_user(
   image VARCHAR(255),
   department_id INTEGER
 )
+RETURNS users
 LANGUAGE plpgsql
 AS $$
+DECLARE
+  created_user users;
 BEGIN
   INSERT INTO users (first_name, last_name, title, email, image, department_id)
-  VALUES (first_name, last_name, title, email, image, department_id);
+  VALUES (first_name, last_name, title, email, image, department_id)
+  RETURNING * INTO created_user;
+
+  RETURN created_user;
 END;
 $$;
 
 -- Stored procedure for updating a user
-CREATE OR REPLACE PROCEDURE update_user(
+CREATE OR REPLACE FUNCTION update_user(
   user_id INTEGER,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
@@ -59,37 +65,24 @@ CREATE OR REPLACE PROCEDURE update_user(
   image VARCHAR(255),
   department_id INTEGER
 )
+RETURNS users
 LANGUAGE plpgsql
 AS $$
+DECLARE
+  updated_user users;
 BEGIN
   UPDATE users
   SET
-    first_name = COALESCE(first_name, users.first_name),
-    last_name = COALESCE(last_name, users.last_name),
-    title = COALESCE(title, users.title),
-    email = COALESCE(email, users.email),
-    image = COALESCE(image, users.image),
-    department_id = COALESCE(department_id, users.department_id)
-  WHERE id = user_id;
-END;
-$$;
+    first_name = COALESCE($2, users.first_name),
+    last_name = COALESCE($3, users.last_name),
+    title = COALESCE($4, users.title),
+    email = COALESCE($5, users.email),
+    image = COALESCE($6, users.image),
+    department_id = COALESCE($7, users.department_id)
+  WHERE id = $1
+  RETURNING * INTO updated_user;
 
--- Stored procedure for getting a user by ID
-CREATE OR REPLACE FUNCTION get_user(user_id INTEGER)
-RETURNS users AS $$
-BEGIN
-  RETURN (
-    SELECT * FROM users WHERE id = user_id
-  );
-END;
-$$ LANGUAGE plpgsql;
-
--- Stored procedure for deleting a user by ID
-CREATE OR REPLACE PROCEDURE delete_user(user_id INTEGER)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-  DELETE FROM users WHERE id = user_id;
+  RETURN updated_user;
 END;
 $$;
 

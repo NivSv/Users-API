@@ -12,6 +12,7 @@ import {
     Query,
 } from '@nestjs/common'
 import {
+    ApiBadRequestResponse,
     ApiCreatedResponse,
     ApiNotFoundResponse,
     ApiOkResponse,
