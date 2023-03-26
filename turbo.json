@@ -9,6 +9,10 @@
       "dependsOn": ["^build"],
       "outputs": []
     },
+    "test:cov": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
     "lint": {
       "outputs": []
     },

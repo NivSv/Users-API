@@ -1,24 +1,24 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PostgresService } from '@niv/postgres';
-import { UsersService } from './users.service';
+import { Test, TestingModule } from '@nestjs/testing'
+import { PostgresService } from '@niv/postgres'
+import { UsersService } from './users.service'
 
-const mockPrismaService = {};
+const mockPrismaService = {}
 
 describe('UsersService', () => {
-  let service: UsersService;
+    let service: UsersService
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        UsersService,
-        { provide: PostgresService, useValue: mockPrismaService },
-      ],
-    }).compile();
+    beforeEach(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            providers: [
+                UsersService,
+                { provide: PostgresService, useValue: mockPrismaService },
+            ],
+        }).compile()
 
-    service = module.get<UsersService>(UsersService);
-  });
+        service = module.get<UsersService>(UsersService)
+    })
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+    it('should be defined', () => {
+        expect(service).toBeDefined()
+    })
+})
