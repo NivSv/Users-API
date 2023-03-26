@@ -16,6 +16,7 @@ const configService = new ConfigService()
             username: configService.postgresUser,
             password: configService.postgresPassword,
             database: configService.postgresDb,
+            ssl: configService.postgresSecure,
         }),
     ],
     controllers: [UsersController],
