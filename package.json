@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "turbo run build --parallel --continue",
+        "build": "turbo run build --parallel",
         "format": "prettier --write \"**/*.{ts,tsx,md}\"",
         "start": "docker-compose up -d --remove-orphans && turbo run start --parallel --continue",
         "dev": "docker-compose up -d --remove-orphans && turbo run dev --parallel",
@@ -15,6 +15,7 @@
         "test:watch": "turbo run test:watch --parallel --continue",
         "test:cov": "turbo run test:cov --parallel --continue",
         "test:e2e": "turbo run test:e2e --parallel --continue",
+        "type-check": "turbo run type-check --parallel --continue",
         "prepare": "husky install"
     },
     "keywords": [],
