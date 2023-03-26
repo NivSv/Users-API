@@ -11,7 +11,8 @@ CREATE TABLE users (
   title VARCHAR(255),
   email VARCHAR(255) NOT NULL CHECK (POSITION('@' IN email) > 1 AND POSITION('.' IN SUBSTRING(email, POSITION('@' IN email))) > 0),
   image VARCHAR(255),
-  department_id INTEGER REFERENCES departments(id) ON DELETE SET NULL
+  department_id INTEGER NOT NULL,
+  FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE CASCADE
 );
 
 INSERT INTO departments (name, description) VALUES
@@ -87,34 +88,28 @@ END;
 $$;
 
 -- Stored procedure for creating a department
-CREATE OR REPLACE PROCEDURE create_department(
+CREATE OR REPLACE FUNCTION create_department(
   name VARCHAR(255),
   description VARCHAR(255)
 )
-LANGUAGE plpgsql
+RETURNS departments
 AS $$
+DECLARE
+  new_department departments;
 BEGIN
   INSERT INTO departments (name, description)
-  VALUES (name, description);
-END;
-$$;
+  VALUES (name, description)
+  RETURNING * INTO new_department;
 
--- Stored procedure for updating a department
-CREATE OR REPLACE PROCEDURE update_department(
-  department_id INTEGER,
-  name VARCHAR(255),
-  description VARCHAR(255)
-)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-  UPDATE departments
-  SET
-    name = COALESCE(name, departments.name),
-    description = COALESCE(description, departments.description)
-  WHERE id = department_id;
+  SELECT COUNT(u.id)::INTEGER INTO new_department.user_count
+  FROM departments d
+  LEFT JOIN users u ON d.id = u.department_id
+  WHERE d.id = new_department.id
+  GROUP BY d.id;
+
+  RETURN new_department;
 END;
-$$;
+$$ LANGUAGE plpgsql;
 
 -- Stored procedure for getting all users in a department
 CREATE OR REPLACE FUNCTION get_users(
@@ -176,15 +171,5 @@ BEGIN
       %s
       first_name IS NOT NULL AND last_name IS NOT NULL
   ', firstNameFilter, lastNameFilter, emailFilter, imageFilter, titleFilter, departmentNameFilter);
-END;
-$$ LANGUAGE plpgsql;
-
--- Stored procedure for getting all departments
-CREATE OR REPLACE FUNCTION get_all_departments()
-RETURNS SETOF departments AS $$
-BEGIN
-  RETURN QUERY (
-    SELECT * FROM departments
-  );
 END;
 $$ LANGUAGE plpgsql;

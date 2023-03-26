@@ -10,6 +10,7 @@ import { INTERNAL_SERVER_ERROR_TEXT } from '../errors.constants'
 import { Department, departmentSchema } from './departments.schema'
 import { CreateDepartmentDto } from './dtos/create-department.dto'
 import {
+    CREATE_DEPARTMENT,
     DELETE_DEPARTMENT,
     GET_ALL_DEPARTMENTS,
     GET_DEPARTMENT,
@@ -68,23 +69,11 @@ export class DepartmentsService {
     ): Promise<Department> {
         try {
             const res = await this.postgres.query<Department>(
-                `INSERT INTO departments (name, description) VALUES ('${createDepartmentDto.name}', '${createDepartmentDto.description}');`
+                CREATE_DEPARTMENT,
+                [createDepartmentDto.name, createDepartmentDto.description]
             )
-            return z.array(departmentSchema).parse(res)[0]
-        } catch (error: unknown) {
-            Logger.error(error)
-            throw new InternalServerErrorException(INTERNAL_SERVER_ERROR_TEXT)
-        }
-    }
+            console.log({ res })
 
-    async Update(
-        department: Department,
-        description: string
-    ): Promise<Department> {
-        try {
-            const res = await this.postgres.query<Department>(
-                `UPDATE departments SET description = '${description}' WHERE id = ${department.id};`
-            )
             return z.array(departmentSchema).parse(res)[0]
         } catch (error: unknown) {
             Logger.error(error)
@@ -94,12 +83,6 @@ export class DepartmentsService {
 
     async Delete(department: Department): Promise<void> {
         try {
-            const users = await this.usersService.GetAllByDepartmentId(
-                department.id
-            )
-            for (const user of users) {
-                await this.usersService.Delete(user)
-            }
             await this.postgres.query(DELETE_DEPARTMENT, [department.id])
         } catch (error: unknown) {
             Logger.error(error)

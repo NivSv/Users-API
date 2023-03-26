@@ -38,4 +38,21 @@ describe('UsersMapper', () => {
             expect(userDto.departmentName).toEqual(departmentStub.name)
         })
     })
+
+    describe('toDtos', () => {
+        it('should map users to user DTOs', async () => {
+            const userDtos: UserDto[] = await usersMapper.toDtos([userStub])
+
+            expect(userDtos).toBeDefined()
+            expect(userDtos.length).toEqual(1)
+            expect(userDtos[0].id).toEqual(userStub.id)
+            expect(userDtos[0].firstName).toEqual(userStub.first_name)
+            expect(userDtos[0].lastName).toEqual(userStub.last_name)
+            expect(userDtos[0].email).toEqual(userStub.email)
+            expect(userDtos[0].image).toEqual(userStub.image)
+            expect(userDtos[0].title).toEqual(userStub.title)
+            expect(userDtos[0].departmentId).toEqual(userStub.department_id)
+            expect(userDtos[0].departmentName).toEqual(departmentStub.name)
+        })
+    })
 })
