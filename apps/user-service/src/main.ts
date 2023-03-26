@@ -3,9 +3,11 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { patchNestJsSwagger } from 'nestjs-zod';
+import { ConfigService } from './config/config.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
   //cors
   const options = {
     origin: '*',
@@ -24,10 +26,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(configService.port);
   Logger.log(`********************************`);
   Logger.log(`Backend is running in ${process.env.NODE_ENV} mode`);
-  Logger.log(`server listen on port ${process.env.PORT || 3000}`);
+  Logger.log(`server listen on port ${configService.port || 3000}`);
   Logger.log(`********************************`);
 }
 bootstrap();

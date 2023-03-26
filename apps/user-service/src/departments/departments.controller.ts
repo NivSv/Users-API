@@ -9,7 +9,6 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { Department } from '@prisma/client';
 import { DepartmentDto } from './departments.dto';
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto } from './dtos/create-department.dto';
@@ -22,14 +21,12 @@ export class DepartmentsController {
 
   @ApiOkResponse({ type: DepartmentDto, isArray: true })
   @Get()
-  async findAll(): Promise<Array<Department>> {
+  async findAll(): Promise<Array<any>> {
     return this.departmentsService.GetAll();
   }
 
   @Post()
-  async create(
-    @Body() createDepartmentDto: CreateDepartmentDto,
-  ): Promise<Department> {
+  async create(@Body() createDepartmentDto: CreateDepartmentDto): Promise<any> {
     return this.departmentsService.Create(createDepartmentDto);
   }
 

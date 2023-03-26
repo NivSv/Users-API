@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { DepartmentsService } from '../departments/departments.service';
 import { UserDto } from './users.dto';
+import { User } from './users.schema';
 
 @Injectable()
 export class UsersMapper {
@@ -11,13 +11,13 @@ export class UsersMapper {
   async toDto(user: User): Promise<UserDto> {
     return {
       id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: user.first_name,
+      lastName: user.last_name,
       email: user.email,
       image: user.image,
       title: user.title,
-      departmentId: user.departmentId,
-      departmentName: (await this.departmentsService.Get(user.departmentId))
+      departmentId: user.department_id,
+      departmentName: (await this.departmentsService.Get(user.department_id))
         .name,
     };
   }

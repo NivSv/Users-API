@@ -10,7 +10,6 @@ const UserSchema = z.object({
   image: z.string().describe('Image'),
   departmentId: z.number().describe('Department Id'),
   departmentName: z.string().describe('Department Name'),
-  createdAt: z.date().describe('Created At'),
 });
 
 export class UserDto extends createZodDto(UserSchema) {}

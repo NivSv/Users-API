@@ -1,58 +1,46 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { PostgresService } from '@niv/postgres';
+import { z } from 'nestjs-zod/z';
+import { Department, departmentSchema } from './departments.schema';
 import { CreateDepartmentDto } from './dtos/create-department.dto';
 
 @Injectable()
 export class DepartmentsService {
-  @Inject(PrismaService) private readonly prisma!: PrismaService;
+  @Inject(PostgresService) private readonly postgres!: PostgresService;
 
   async Get(id: number): Promise<Department | null> {
-    return this.prisma.department.findUnique({
-      where: {
-        id: id,
-      },
-    });
+    const res = await this.postgres.query<Department>(
+      `SELECT * FROM departments WHERE id = ${id};`,
+    );
+    return z.array(departmentSchema).parse(res)[0];
   }
 
   async GetByName(name: string): Promise<Department | null> {
-    return this.prisma.department.findUnique({
-      where: {
-        name: name,
-      },
-    });
+    const res = await this.postgres.query<Department>(
+      `SELECT * FROM departments WHERE name = '${name}';`,
+    );
+    return z.array(departmentSchema).parse(res)[0];
   }
 
-  async GetAll(): Promise<Department[]> {
-    return this.prisma.department.findMany();
+  async GetAll(): Promise<Array<Department>> {
+    return await this.postgres.query<Department>(`SELECT * FROM departments;`);
   }
 
-  async Create(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
-    return this.prisma.department.create({
-      data: {
-        name: createDepartmentDto.name,
-        description: createDepartmentDto.description,
-      },
-    });
+  async Create(createDepartmentDto: CreateDepartmentDto): Promise<void> {
+    await this.postgres.query<Department>(
+      `INSERT INTO departments (name, description) VALUES ('${createDepartmentDto.name}', '${createDepartmentDto.description}');`,
+    );
   }
 
-  async Update(
-    department: Department,
-    description: string,
-  ): Promise<Department> {
-    return this.prisma.department.update({
-      where: {
-        id: department.id,
-      },
-      data: {
-        description: description,
-      },
-    });
+  async Update(department: Department, description: string): Promise<void> {
+    await this.postgres.query<Department>(
+      `UPDATE departments SET description = '${description}' WHERE id = ${department.id};`,
+    );
   }
 
   async Delete(department: Department): Promise<void> {
-    this.prisma.department.delete({
-      where: {
-        id: department.id,
-      },
-    });
+    await this.postgres.query(
+      `DELETE FROM departments WHERE id = ${department.id};`,
+    );
   }
 }

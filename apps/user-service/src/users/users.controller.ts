@@ -56,12 +56,12 @@ export class UsersController {
   @ApiQuery({ name: 'title', required: false })
   @ApiQuery({ name: 'email', required: false })
   @ApiQuery({ name: 'image', required: false })
-  @ApiQuery({ name: 'department', required: false })
+  @ApiQuery({ name: 'departmentName', required: false })
   @Get()
   async findAll(
     @Query() findFiltersDto: FindFiltersDto,
   ): Promise<Array<UserDto>> {
-    return this.usersMapper.toDtos(
+    return await this.usersMapper.toDtos(
       await this.usersService.GetAll(findFiltersDto),
     );
   }

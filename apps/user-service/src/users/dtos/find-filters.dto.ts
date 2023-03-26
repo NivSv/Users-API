@@ -7,7 +7,7 @@ const FindFilterSchema = z.object({
   title: z.string().optional().describe('Title'),
   email: z.string().email().optional().describe('Email'),
   image: z.string().url().optional().describe('Image'),
-  department: z.string().optional().describe('Department'),
+  departmentName: z.string().optional().describe('Department Name'),
 });
 
 export class FindFiltersDto extends createZodDto(FindFilterSchema) {}

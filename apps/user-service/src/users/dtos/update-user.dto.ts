@@ -7,6 +7,7 @@ const UpdateUserSchema = z.object({
   lastName: z.string().min(2).describe('Last Name'),
   title: z.string().optional().describe('Title'),
   image: z.string().url().optional().describe('Image'),
+  email: z.string().email().describe('Email'),
   department: z.string().describe('Department'),
 });
 

@@ -18,13 +18,14 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@niv/postgres": "workspace:*",
     "@nestjs/common": "^9.3.12",
-    "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.3.12",
     "@nestjs/platform-express": "^9.3.12",
     "@nestjs/swagger": "^6.2.1",
+    "@niv/postgres": "workspace:*",
     "@prisma/client": "^4.11.0",
+    "dotenv": "^16.0.3",
+    "dotenv-expand": "^10.0.0",
     "nestjs-zod": "^1.2.3",
     "pg": "^8.10.0",
     "prisma": "^4.11.0",

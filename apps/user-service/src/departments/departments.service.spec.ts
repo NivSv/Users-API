@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '../prisma.service';
+import { PostgresService } from '@niv/postgres';
 import { DepartmentsService } from './departments.service';
 
 describe('DepartmentsService', () => {
@@ -7,9 +7,9 @@ describe('DepartmentsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [DepartmentsService, PrismaService],
+      providers: [DepartmentsService, PostgresService],
     })
-      .overrideProvider(PrismaService)
+      .overrideProvider(PostgresService)
       .useValue({})
       .compile();
 
