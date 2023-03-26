@@ -22,6 +22,7 @@ export class PostgresService implements OnModuleInit, OnModuleDestroy {
             user: options.username,
             password: options.password,
             database: options.database,
+            ssl: options.ssl,
         })
     }
 

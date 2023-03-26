@@ -18,6 +18,7 @@ export class ConfigService {
             postgresUser: z.string(),
             postgresPassword: z.string(),
             postgresDb: z.string(),
+            postgresSecure: z.boolean(),
         })
 
         environmentVariablesSchema.parse(this)
@@ -45,5 +46,11 @@ export class ConfigService {
 
     get postgresDb(): string {
         return this.envCache.POSTGRES_DB
+    }
+
+    get postgresSecure(): boolean {
+        return this.envCache.POSTGRES_SECURE != null
+            ? this.envCache.POSTGRES_SECURE.toLowerCase() == 'true'
+            : true
     }
 }

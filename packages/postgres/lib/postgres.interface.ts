@@ -4,4 +4,5 @@ export interface PostgresModuleOptions {
     username: string
     password: string
     database: string
+    ssl: boolean
 }
