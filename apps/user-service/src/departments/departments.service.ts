@@ -72,8 +72,6 @@ export class DepartmentsService {
                 CREATE_DEPARTMENT,
                 [createDepartmentDto.name, createDepartmentDto.description]
             )
-            console.log({ res })
-
             return z.array(departmentSchema).parse(res)[0]
         } catch (error: unknown) {
             Logger.error(error)

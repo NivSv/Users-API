@@ -3,22 +3,22 @@ version: '3.1'
 name: Users-API
 
 services:
-  db:
-    container_name: postgres
-    image: postgres
-    restart: always
-    ports:
-      - '5432:5432'
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: users-api
-    volumes:
-      - ./init-scripts:/docker-entrypoint-initdb.d
+    db:
+        container_name: postgres
+        image: postgres
+        restart: always
+        ports:
+            - '5432:5432'
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: example
+            POSTGRES_DB: users-api
+        volumes:
+            - ./init-scripts:/docker-entrypoint-initdb.d
 
-  adminer:
-    container_name: adminer
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
+    adminer:
+        container_name: adminer
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
