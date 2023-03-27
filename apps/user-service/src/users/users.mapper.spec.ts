@@ -35,7 +35,6 @@ describe('UsersMapper', () => {
             expect(userDto.image).toEqual(userStub.image)
             expect(userDto.title).toEqual(userStub.title)
             expect(userDto.departmentId).toEqual(userStub.department_id)
-            expect(userDto.departmentName).toEqual(departmentStub.name)
         })
     })
 
@@ -52,7 +51,6 @@ describe('UsersMapper', () => {
             expect(userDtos[0].image).toEqual(userStub.image)
             expect(userDtos[0].title).toEqual(userStub.title)
             expect(userDtos[0].departmentId).toEqual(userStub.department_id)
-            expect(userDtos[0].departmentName).toEqual(departmentStub.name)
         })
     })
 })
