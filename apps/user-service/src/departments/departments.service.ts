@@ -23,6 +23,11 @@ export class DepartmentsService {
     @Inject(PostgresService) private readonly postgres!: PostgresService
     @Inject(UsersService) private readonly usersService!: UsersService
 
+    /**
+     * Gets a department by id
+     * @param id The id of the department
+     * @returns Promise department
+     */
     async Get(id: number): Promise<Department | null> {
         try {
             const res = await this.postgres.query<Department>(GET_DEPARTMENT, [
@@ -38,6 +43,11 @@ export class DepartmentsService {
         }
     }
 
+    /**
+     *  Gets a department by name
+     * @param name The name of the department
+     * @returns Promise department
+     */
     async GetByName(name: string): Promise<Department | null> {
         try {
             const res = await this.postgres.query<Department>(
@@ -54,6 +64,10 @@ export class DepartmentsService {
         }
     }
 
+    /**
+     *  Gets all departments
+     * @returns Promise array of departments
+     */
     async GetAll(): Promise<Array<Department>> {
         try {
             const res = await this.postgres.query(GET_ALL_DEPARTMENTS)
@@ -64,6 +78,11 @@ export class DepartmentsService {
         }
     }
 
+    /**
+     * Creates a department
+     *  @param createDepartmentDto The department to create
+     *  @returns Promise department
+     */
     async Create(
         createDepartmentDto: CreateDepartmentDto
     ): Promise<Department> {
@@ -79,6 +98,10 @@ export class DepartmentsService {
         }
     }
 
+    /**
+     * Deletes a department
+     * @param department The department to delete
+     */
     async Delete(department: Department): Promise<void> {
         try {
             await this.postgres.query(DELETE_DEPARTMENT, [department.id])
