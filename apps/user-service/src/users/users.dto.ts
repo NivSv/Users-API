@@ -9,7 +9,6 @@ const UserSchema = z.object({
     email: z.string().email().describe('Email'),
     image: z.string().optional().describe('Image'),
     departmentId: z.number().describe('Department Id'),
-    departmentName: z.string().describe('Department Name'),
 })
 
 export class UserDto extends createZodDto(UserSchema) {}

@@ -60,8 +60,6 @@ export class UsersService {
     async GetAll(filters?: FindFiltersDto): Promise<Array<User>> {
         try {
             const res = await this.postgres.query(GET_ALL_USERS, [filters])
-            console.log(res)
-
             return z.array(userSchema).parse(res)
         } catch (error: unknown) {
             Logger.error(error)

@@ -17,9 +17,6 @@ export class UsersMapper {
             image: user.image,
             title: user.title,
             departmentId: user.department_id,
-            departmentName: (
-                await this.departmentsService.Get(user.department_id)
-            ).name,
         }
     }
 

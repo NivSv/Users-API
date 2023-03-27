@@ -8,5 +8,4 @@ export const userDtoStub: UserDto = {
     email: 'tes@gmail.com',
     image: 'www.google.com',
     departmentId: 1,
-    departmentName: 'Software',
 }
