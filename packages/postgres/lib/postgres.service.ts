@@ -43,12 +43,13 @@ export class PostgresService implements OnModuleInit, OnModuleDestroy {
         query: string,
         params?: any[]
     ): Promise<Array<QueryResponse>> {
-        const client = await this.getClient()
         try {
+            const client = await this.pool.connect()
             const result = await client.query<QueryResponse>(query, params)
+            this.pool.end()
             return result.rows
-        } finally {
-            client.release()
+        } catch (error) {
+            console.error(error)
         }
     }
 }
