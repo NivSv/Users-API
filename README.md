@@ -2,7 +2,10 @@
 
 ## Table of contents
 * [General info](#general-info)
+* [API Documentation](#api-documentation)
+* [Features](#features)
 * [Technologies](#technologies)
+* [Environment Variables](#environment-variables)
 
 ## General info
 This is a simple user API that allows you to perform CRUD (Create, Read, Update, Delete) operations on users using Node.js, Express.js, and a relational database. The API also supports department interfaces with the ability to create and delete departments.
