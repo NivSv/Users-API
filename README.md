@@ -12,7 +12,7 @@ This is a simple user API that allows you to perform CRUD (Create, Read, Update,
 
 ## API Documentation
 For more information about the API endpoints and how to use them, please refer to the API documentation.<br/>
-[Link to prod swagger](https://users-api-iexe.onrender.com/api)
+[Link to prod swagger (Running with cold start can take few mins)](https://users-api-iexe.onrender.com/api)
 
 ## Features
 * Full CRUD API support for users
