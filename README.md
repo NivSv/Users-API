@@ -8,7 +8,7 @@
 * [Environment Variables](#environment-variables)
 
 ## General info
-This is a simple user API that allows you to perform CRUD (Create, Read, Update, Delete) operations on users using Node.js, Express.js, and a relational database. The API also supports department interfaces with the ability to create and delete departments.
+This is a simple user API that allows you to perform CRUD (Create, Read, Update, Delete) operations on users using Node.js, NestJS and a relational database. The API also supports department interfaces with the ability to create and delete departments.
 
 ## API Documentation
 For more information about the API endpoints and how to use them, please refer to the API documentation.<br/>
